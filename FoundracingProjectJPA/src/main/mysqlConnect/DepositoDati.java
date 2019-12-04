@@ -3,15 +3,17 @@ package mysqlConnect;
 
 import applicationMiddle.RowTableMessage;
 import applicationMiddle.RowTableProjects;
+import applicationMiddle.wrapperDbs;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DepositoDati {
 	
-
 	private Connect conn = null;
+	
 	
 	private List<RowTableProjects> getRowTableProjects(String sql, Vector<String> v) {
 		conn = new Connect();
