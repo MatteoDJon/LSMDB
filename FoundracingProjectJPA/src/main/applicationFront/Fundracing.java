@@ -103,7 +103,6 @@ public class Fundracing extends Application
 		
 		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE); //LEVEL.SEVERE altrimenti,o ON
 		
-		deposito.clearCache("delete");
 		
 		deposito.getLock();
 		// inizio sezione protetta da variabile atomica
@@ -213,15 +212,13 @@ public class Fundracing extends Application
 			
 			deposito.getLock();
 			// inizio sezione protetta da variabile atomica
-				Long start=new Date().getTime();
-
+				
 				deposito.deleteMessage(selectedMessagetId);
 				table_message.updateMessages(deposito.getMessages(agencyName));
 				refuse.setDisable(true);
 				accept.setDisable(true);
 				description_message.clear();
-				Long end=new Date().getTime();
-				System.out.println("execution time: "+(end-start));
+				
 			// fine sezione protetta da variabile atomica
 			deposito.freeLock();
 
@@ -239,7 +236,6 @@ public class Fundracing extends Application
 				return;
 			}
 			
-			Long start=new Date().getTime();
 			deposito.getLock();
 			// inizio sezione protetta da variabile atomica
 
@@ -251,9 +247,7 @@ public class Fundracing extends Application
 				description_message.clear();
 				table.updateProjects(deposito.getProjects(agencyName));
 				table_message.updateMessages(deposito.getMessages(agencyName));
-				Long end=new Date().getTime();
-				System.out.println("execution time: "+(end-start));
-
+			
 			// fine sezione protetta da variabile atomica
 			deposito.freeLock();
 		});
@@ -268,7 +262,6 @@ public class Fundracing extends Application
 		
 		
 		insert.setOnAction((ActionEvent ev2)->{
-			Long start=new Date().getTime();
 			String budget = total_budget.getText();
 			String desc = description.getText(); 
 			String name = name_project.getText();
@@ -311,8 +304,7 @@ public class Fundracing extends Application
 				alert.showAndWait();
 				return;
 			}
-			Long end=new Date().getTime();
-			System.out.println("execution time: "+(end-start));
+			
         });
 		
 		
@@ -325,7 +317,6 @@ public class Fundracing extends Application
 				alert.showAndWait();	
 				return;
 			}
-			Long start=new Date().getTime();
 			deposito.getLock();
 			Boolean iAmOwner = deposito.iAmOwner(selectedProjectId, agencyName);
 			
@@ -365,8 +356,7 @@ public class Fundracing extends Application
 				return;
 			}
 			deposito.freeLock();
-			Long end=new Date().getTime();
-			System.out.println("execution time: "+(end-start));
+			
 		});
 			
 			
@@ -381,7 +371,6 @@ public class Fundracing extends Application
 			
 			
 		update.setOnAction((ActionEvent ev1)->{
-			Long start=new Date().getTime();
 				String string_stakeInsered = stake.getText();
 				
 				
@@ -432,8 +421,7 @@ public class Fundracing extends Application
 					description.clear();
 				}
 				deposito.freeLock();
-				Long end=new Date().getTime();
-				System.out.println("execution time: "+(end-start));
+				
 			});
 			
 			
@@ -454,7 +442,6 @@ public class Fundracing extends Application
 					alert.showAndWait();
 					return;
 				}
-				Long start=new Date().getTime();
 				deposito.getLock();
 				String receiver = object_receiver.toString();
 				
@@ -481,8 +468,7 @@ public class Fundracing extends Application
 					
 				}
 				deposito.freeLock();
-				Long end=new Date().getTime();
-				System.out.println("execution time: "+(end-start));
+				
 			} 
 			else
 			{
@@ -494,9 +480,9 @@ public class Fundracing extends Application
 		});
 		
 		mysql.setOnAction((ActionEvent ev1)->{
-			if(mysqlActive==true) 
+			if(mysqlActive==true) //mysql=green
 			{
-				if(KVActive==false)
+				if(KVActive==false)//kv=red
 				{
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setHeaderText("Non puoi disattivare la connessione di keyValue finchè non attivi quella di KeyValue!");
@@ -504,7 +490,7 @@ public class Fundracing extends Application
 					return;
 				}
 				else
-				{
+				{//kv=green
 					mysqlActive=false;
 					mysql.setStyle("-fx-background-color: red");
 					gm.setStatusMySql(false);
@@ -516,7 +502,7 @@ public class Fundracing extends Application
 				//switch connessione
 			}
 			else
-			{
+			{//mysql=red->green
 				mysqlActive=true;
 				mysql.setStyle("-fx-background-color: green");
 				gm.setStatusMySql(true);
@@ -525,9 +511,9 @@ public class Fundracing extends Application
 		});
 		
 		keyValue.setOnAction((ActionEvent ev1)->{
-			if(KVActive==true) 
+			if(KVActive==true) //kv=green
 			{//sto passando da keyvalue verde a rosso
-				if(mysqlActive==false)
+				if(mysqlActive==false) //sql=red
 				{
 					Alert alert = new Alert(Alert.AlertType.INFORMATION);
 					alert.setHeaderText("Non puoi disattivare la connessione di keyValue finchè non attivi quella di mySQL!");
@@ -535,7 +521,7 @@ public class Fundracing extends Application
 					return;
 				}
 				else
-				{
+				{	//sql=green
 					KVActive=false;
 					keyValue.setStyle("-fx-background-color: red");
 					gm.setStatusKV(false);
@@ -544,7 +530,7 @@ public class Fundracing extends Application
 				}
 			}
 			else 
-			{
+			{	//kv=red
 				KVActive=true;
 				keyValue.setStyle("-fx-background-color: green");
 				deposito=dbKV;
