@@ -1,5 +1,5 @@
 # LSMDB
-Repository for the workgroup 1 of the exam of Large Scale and Multi-Structured Data Bases of  University of Pisa, see the README.md above for more detailed informations.
+Repository for the workgroup 1 of the exam of Large Scale and Multi-Structured Data Bases of  University of Pisa
 
 How to start the application:
 1.  execute the createDB.sql file
