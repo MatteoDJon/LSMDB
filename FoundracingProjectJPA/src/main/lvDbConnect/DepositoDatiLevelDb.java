@@ -307,8 +307,9 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
     	val.add(Integer.toString(messageId));
     	val.add("0");
     	if(messageId<1000000)
-    		conn.writeEntity("delete","MessaggioEntity", deleteAtt, val);
-    	 
+    		conn.writeEntity("delete","MessaggioEntity", deleteAtt, val); 
+    	else
+    		conn.deleteSingleEntity("insert","MessaggioEntity",Integer.toString(messageId));
     }
     
     //Inserimento del progetto in cache
@@ -725,6 +726,7 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
     		{
     		
     			super.deleteMessage(Integer.parseInt(row.get(0)));
+    		
     		}
     	}
     }
