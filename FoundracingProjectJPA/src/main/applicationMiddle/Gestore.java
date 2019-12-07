@@ -59,7 +59,7 @@ public class Gestore {
 					
 				}
 			};
-			timer.schedule(task, 0, 15000);
+			timer.schedule(task, 0, 30000);
 			
 							
 	}
@@ -87,7 +87,7 @@ public class Gestore {
 		
 		//Leggo in ogni caso dalla cache e aggiorno
 		d.setAggiornamentoFatto(true);
-		if(cb.getValue()==null||cb.getValue().toString().equals("")) //posso aggiornare solo se non è stato selezionato nulla nel choicebox
+		if(cb.getValue()==null||cb.getValue().toString().equals("")) //posso aggiornare solo se non Ã¨ stato selezionato nulla nel choicebox
 			cb.setItems(FXCollections.observableArrayList(d.getListAgency()));
 		tp.updateProjects(d.getProjects(agencyName));
 		List<RowTableMessage> messaggiDaAggiungere = d.getMessages(agencyName);
