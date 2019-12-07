@@ -472,7 +472,8 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
     	val.add("0");
     	if(selectedProjectId<1000000)
     		conn.writeEntity("delete","ProgettoEntity", deleteAtt, val);
-    	
+    	else
+		conn.deleteSingleEntity("insert","ProgettoEntity", Integer.toString(selectedProjectId));
     	
     }
     
@@ -577,7 +578,7 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
 						;
 					else
 					{
-						//Verifico se l'id del progetto è >= 100000
+						//Verifico se l'id del progetto Ã¨ >= 100000
 						if(Integer.parseInt(messages.get(i).get(0)) >= 100000)
 		    			ret.add(messages.get(i));
 					}	
