@@ -78,7 +78,8 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
     }
     
     
-    public Vector<String> getAgency(String agencyName) {
+    public Vector<String> getAgency(String agencyName) 
+    {	/*
         Vector<String> agency = getEntityFromLevelDb( "AziendaEntity", agencyName );
         if( agency == null || agency.size() < 6 )
             return new Vector<String>();
@@ -91,7 +92,11 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
         ret.add(agency.get(1));
         
         return ret;
+        */
+    	return super.getAgency(agencyName);
     }
+    
+    
     public Vector<String> getAgency(String agencyName,String password) {
     	Vector<String> agency = getEntityFromLevelDb( "AziendaEntity", agencyName );
     	if( agency == null || agency.size() < 6 || !agency.get(3).equals(password))
@@ -473,7 +478,8 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
     	if(selectedProjectId<1000000)
     		conn.writeEntity("delete","ProgettoEntity", deleteAtt, val);
     	else
-		conn.deleteSingleEntity("insert","ProgettoEntity", Integer.toString(selectedProjectId));
+    		conn.deleteSingleEntity("insert", "FinanziamentoEntity", Integer.toString(selectedProjectId));
+    	
     	
     }
     
@@ -578,7 +584,7 @@ public class DepositoDatiLevelDb extends DepositoDati implements wrapperDbs {
 						;
 					else
 					{
-						//Verifico se l'id del progetto Ã¨ >= 100000
+						//Verifico se l'id del progetto è >= 100000
 						if(Integer.parseInt(messages.get(i).get(0)) >= 100000)
 		    			ret.add(messages.get(i));
 					}	
